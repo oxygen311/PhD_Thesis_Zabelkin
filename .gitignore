@@ -1,0 +1,22 @@
+# LaTeX intermediate and auxiliary files
+*.aux
+*.log
+*.toc
+*.out
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.snm
+*.synctex.gz
+*.tct
+*.vrb
+
+# Clean up any temp TeX stuff
+*.tmp
+*~
