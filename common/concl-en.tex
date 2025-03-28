@@ -1,0 +1,25 @@
+%!TEX root = ../dissertation.tex
+\begin{itemize}
+    \item The current state of the research field has been investigated, clarifying the problem and methods for evaluating results;
+    \item The formalization of the problem of building and tuning models of metric trees with functions on edges considered on the example of the demographic inference from genetic data.
+    \item The method for automatic tuning of the models of metric trees with functions on edges based on a combination of global and local optimization methods was developed considered on the example of the demographic inference from genetic data;
+    \item The method for automatic selection of model of metric tree with functions on edges was developed considered on the example of the demographic inference from genetic data;
+    \item The software package that incorporates the developed models and methods for inferring the demographic history of populations from genetic data was designed and implemented;
+    \item experimental studies confirming the effectiveness of the developed models and methods, as well as their applicability for inferring the demographic history of populations from genetic data were carried out, and the results of the experiments were analyzed.\\
+\end{itemize}
+
+The value of the likelihood function was used to evaluate the quality of demographic history models in this work.
+Experimental results show that the method of model parameter tuning based on a combination of genetic algorithm and local search allowed to find model parameters that provide a better likelihood value in 88\% of cases (37 models out of 42 tested) than the parameters found by existing methods.
+Using simulated data, the developed method allowed us to find solutions that are 97\% closer to the optimum in the case of one population and 66\% closer to the optimum in the case of three populations than the solutions obtained by existing methods.
+The tuning of the hyperparameters of the genetic algorithm allowed to speed up the implementation by 10\% on average while maintaining the efficiency of the method.
+
+The effectiveness of the method for tuning model parameters based on Bayesian optimization and local optimization under conditions of a computationally complex target function was confirmed.
+The developed method made it possible to find parameter values providing a better likelihood value than existing methods for two previously analyzed data of four and five populations.
+It was shown that Bayesian optimization achieves a solution close to the optimum 50-80\% faster than the genetic algorithm in the case of inferring the demographic history of four and five populations.
+
+The method of automatic model selection allows to automatically build and tune models within given configuration constraints.
+The comparison of models of demographic histories with different numbers of parameters was performed using the Akaike Information Criterion (AIC).
+Experimental studies showed that in three out of four cases, the method was able to find a model that provided a better AIC value than was previously obtained by manual brute force.
+In the fourth case, the resulting model allowed to identify a redundant parameter in the configuration and build a nested model that finally provided the best AIC value for the data.
+
+As promising areas of research we can highlight the improvement of the method of automatic model selection in order to find the optimal set of configuration parameters, as well as the development of methods for tuning metric tree models with functions on the edges, which allow not only the tuning of functional parameters, but also the search for the optimal tree structure.

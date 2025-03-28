@@ -1,0 +1,111 @@
+%!TEX root = ../dissertation.tex
+
+\newcommand{\thesisSpecialtyNumber}{1.2.2}
+\newlocalizedcommand{\thesisSpecialtyName}{Mathematical modeling, numerical methods and software packages (Engineering)}{«Математическое моделирование, численные методы
+и комплексы программ (технические науки)»}
+%\newcommand{\thesisSpecialtyNumberOld}{05.13.18}
+%\newlocalizedcommand{\thesisSpecialtyNameOld}{?}{«Математическое моделирование, численные методы и комплексы программ»}
+\newlocalizedcommand{\thesisAuthorFull}{Noskova Ekaterina Eduardovna}{Носкова Екатерина Эдуардовна}
+\newlocalizedcommand{\thesisAuthorShort}{Noskova~E.~E.}{Носкова~Е.~Э.}
+\newlocalizedcommand{\thesisDegreeGenitive}{PhD in Engineering}{кандидата технических наук}
+\newlocalizedcommand{\thesisTitle}
+{Methods for inferring demographic history models}
+{Методы построения моделей демографических историй}
+
+\newcommand{\thesisOrganizationEng}{ITMO University}
+\newlocalizedcommand{\thesisOrganizationNominative}{\thesisOrganizationEng}{Национальный исследовательский университет ИТМО\\(Университет ИТМО)}
+\newlocalizedcommand{\thesisOrganizationLocative}  {\thesisOrganizationEng}{Университете ИТМО}
+\newlocalizedcommand{\thesisOrganizationGenitive}  {\thesisOrganizationEng}{Университета ИТМО}
+\newlocalizedcommand{\thesisOrganizationShortGenitive}{ITMO University}{Университета~ИТМО}
+\newlocalizedcommand{\thesisOrganizationLogo}{\includegraphics[width=0.28\linewidth]{logo_en}}{\includegraphics[width=0.35\linewidth]{logo_ru}}
+
+\newlocalizedcommand{\thesisInTheLibrary}{in the library of \thesisOrganizationGenitive}{в библиотеке \thesisOrganizationGenitive}
+\newlocalizedcommand{\thesisLibraryAddress}{49 Kronversky pr., Saint Petersburg, Russia}{197101, Санкт-Петербург, Кронверкский пр., д.49}
+\newcommand{\thesisURLAddress}{\url{***}}
+
+\newcommand{\thesisYear}{2023}
+\newlocalizedcommand{\thesisCity}{Saint Petersburg}{Санкт-Петербург}
+\newlocalizedcommand{\defenceDateTime}{\revise{on DD.MM.YYYY at HH:MM}}{\revise{DD.MM.YYYY в HH:MM}}
+\newlocalizedcommand{\defenceAddress}{\revise{address, room number}}{\revise{адрес, аудитория}}
+
+\newcommand{\defenceCouncilNumber}{02.18.00}
+\newlocalizedcommand{\defenceCouncilAddress}{49 Kronversky pr., Saint Petersburg, Russia, room \revise{XXX}}{197101, Санкт-Петербург, Кронверкский пр., д.49, аудитория \revise{XXX}}
+\newlocalizedcommand{\defenceCouncilSecretaryFull}{Mouromtsev Dmitry Ilich}{Муромцев Дмитрий Ильич}
+\newlocalizedcommand{\defenceCouncilSecretaryDegree}{Doctor of Philosophy}{канд. техн. наук}
+\newcommand{\defenceCouncilSecretarySignature}{\includegraphics[width=2cm]{secretary-signature.png}}
+
+\newlocalizedcommand{\supervisorFull}{Ulyantsev Vladimir Igorevich}{Ульянцев Владимир Игоревич}
+\newlocalizedcommand{\supervisorShort}{Ulyantsev~V.~I.}{Ульянцев~В.~И.}
+\newlocalizedcommand{\supervisorDegree}{Doctor of Philosophy}{канд. техн. наук}
+
+% \newlocalizedcommand{\opponents}
+% {\textbf{Tulupyev Alexander L'vovich},\par
+%  \revise{Doctor of Physical and Mathematical Sciences},\par
+%  Professor of Informatics Department\par
+%  Federal State Budgetary Educational Institution of\par 
+%  Higher Professional Education \par 
+%  "Saint-Petersburg State University"\par
+%  \vspace{1ex}\par
+%  \textbf{Pavel Bernard Brazdil},\par
+%  Doctor of Philosophy,
+%  Professor of Engineer Faculty, 
+%  Senior Researcher of INESC TEC’s 
+%  Laboratory of Artificial Intelligence and Decision Support,
+%  University of Porto, Porto, Portugal
+% }{\textbf{Тулупьев Александр Львович},\par
+%  доктор физико-математических наук, \par
+%  профессор кафедры информатики\par
+%  федерального государственного бюджетного\par
+%  образовательного учреждения высшего \par
+%  профессионального образования\par
+%  "Санкт-Петербургский государственный университет"\par
+%  \vspace{1ex}\par
+%  \textbf{Pavel Bernard Brazdil},\par
+%  Doctor of Philosophy,
+%  Professor of Engineer Faculty, 
+%  Senior Researcher of INESC TEC’s 
+%  Laboratory of Artificial Intelligence and Decision Support,
+%  University of Porto, Porto, Portugal
+% }
+
+\newcommand{\nociteallauthorpublications}{\nocite{
+noskova2020gadma,
+noskova2023gadma2,
+noskova2023bayesian,
+zhernakova2020genome,
+nikolic2022stepping,
+adrion2020community,
+lauterbur2023expanding,
+gower2022demes}}
+
+% noscode
+% Some of my papers had very long lists of authors so I had to short them for synopsis, however, I do not want to use those papers in the main document
+\newcommand{\nociteallauthorpublicationsmaindocument}{\nocite{
+noskova2020gadma,
+noskova2023gadma2,
+noskova2023bayesian,
+zhernakova2020genome,
+nikolic2022stepping,
+adrion2020community,
+lauterbur2023expanding,
+gower2022demes}}
+
+% Bibliography filters. As of now, they somewhat depend on which publications the author has.
+
+
+\defbibfilter{thesisIndexed}{\keyword{labauthor:noskova}\and\keyword{phd:noskova}\and\not\keyword{index:vak}\and\(\keyword{index:wos}\or\keyword{index:scopus}\)}
+
+\newlocalizedcommand{\textDissPubs}{Author's publications on the topic of the thesis}{Публикации автора по теме диссертации}
+\newlocalizedcommand{\textOtherPubs}{Author's publications on other topics}{Публикации автора по другим темам}
+\newlocalizedcommand{\textRangeIndexed}{Publications indexed in Web of Science or Scopus}{Публикации в зарубежных изданиях, индексируемых в базах цитирования Web of Science или Scopus}
+\newlocalizedcommand{\textRangeVak}{Publications indexed in Russian journal included in the List of the Higher Attestation Commission}{Публикации в журналах из перечня ВАК}
+\newlocalizedcommand{\textRangeEtc}{Other publications (in Russian)}{Прочие публикации}
+\newlocalizedcommand{\textProgram}{Registered computer programs}{Свидетельства о государственной регистрации программ для ЭВМ}
+
+\defbibheading{headingDissIndexed}{\clearpage\chapter*{\textDissPubs}\section*{\textRangeIndexed}}
+
+\newcommand{\printauthorpublications}{%
+\printbibliography[filter=thesisIndexed,heading=headingDissIndexed]%
+}
+
+%\newcommand{\printauthorpublicationsappendix}{\printbibliography[filter=thesisAppendix,heading=headingAppendix]}

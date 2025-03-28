@@ -1,0 +1,81 @@
+\RequirePackage[l2tabu,orthodox]{nag}
+\documentclass[a5paper,10pt,twoside,openany,article]{memoir}
+
+\input{common/preamble-pre}
+\input{common/preamble-userdefs}
+\input{common/preamble-userdata}
+\input{common/preamble-markups}
+\input{common/preamble-post}
+
+\begin{document}
+
+% Обрезка титульников
+\begin{otherlanguage}{russian}\thetitlepage\end{otherlanguage}
+\begin{otherlanguage}{english}\thetitlepage\end{otherlanguage}
+
+%Оглавление
+\setcounter{page}{4}
+\ifoddpage\null\else\newpage\thispagestyle{empty}\null\newpage\fi
+\clearpage\tableofcontents*\newpage
+\newcounter{savedpage}
+\addtocounter{savedpage}{\value{page}}
+
+% Рефераты на русском и английском языках
+% \renewcommand{\thetable}{Р.\arabic{table}}
+% \renewcommand{\thefigure}{Р.\arabic{figure}}
+% \resetfloatcounters
+\thesynopsis{russian}{Р}{labauthor:noskova}{Synopsis/content-ru}
+% \renewcommand{\thetable}{S.\arabic{table}}
+% \renewcommand{\thefigure}{S.\arabic{figure}}
+% \resetfloatcounters
+\thesynopsis{english}{S}{labauthor:noskova}{Synopsis/content-en}
+
+% Основной текст диссертации
+%\setcounter{page}{\value{savedpage}}
+%\renewcommand{\thetable}{\arabic{table}}
+%\renewcommand{\thefigure}{\arabic{figure}}
+\resetfloatcounters
+
+\include{Dissertation/introduction}    % Введение
+\include{Dissertation/part1}
+\include{Dissertation/part2}
+%\include{Dissertation/part3}
+\include{Dissertation/part4}
+\include{Dissertation/part5}
+\include{Dissertation/conclusion}      % Заключение
+
+\clearpage\urlstyle{rm}\printbibliography\urlstyle{tt}
+\clearpage\listoffigures
+\clearpage\listoftables
+\newpage
+
+%%% Настройки для приложений
+\appendix
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+\counterwithin{algorithm}{chapter}
+\counterwithin{lstlisting}{chapter}
+\renewcommand{\thechapter}{\Asbukx{chapter}}
+
+% Приложения
+    \include{Dissertation/appendix-acknowledgements}
+   %\include{Dissertation/appendix-1}
+   \include{Dissertation/appendix-awards}
+
+% \clearpage
+% \chapter*{Публикации} \addcontentsline{toc}{chapter}{Публикации}
+
+
+%  \clearpage
+%  \chapter*{Публикации автора по теме диссертации приведены ниже} 
+% \addcontentsline{toc}{chapter}{Публикации}
+% \includepdf[pages=-, pagecommand={}]{Papers/noskova_2020_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/noskova_2023_GigaScience_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/noskova_2023_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/zhernakova_2020_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/nikolic_2023_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/adrion_2020_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/lauterbur_2023_compressed.pdf}
+% \includepdf[pages=-, pagecommand={}]{Papers/gower_2022_compressed.pdf}
+
+\end{document}

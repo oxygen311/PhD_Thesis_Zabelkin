@@ -1,0 +1,334 @@
+%!TEX root = ../dissertation.tex
+\textbf{The relevance.} %of the research is determined by the low effectiveness of current software tools for inferring the model of the demographic history of populations from genetic data.
+Metric tree models with functions on edges are used to analyze and predict various events of the real world, for example, processes represented as dynamic systems with variable structure~\cite{кириллов2009динамические, aldous1993continuum}.
+\textit{Metric tree} is a graph that is a tree, where each edge is associated with an interval.
+In general, metric graphs with functions on edges have found wide application, for example, in the form of quantum graphs~\cite{berkolaiko2013introduction}, which are used in physics in the study of quantum chaos~\cite{kottos1997quantum}, waveguides~\cite{exner2015quantum} and photonic crystals~\cite{kuchment2002differential}.
+
+\textit{Model inferring} is a set of actions aimed at selecting the configuration, defining the model parameters and adjusting their values in order to achieve a high correspondence of the modeling results to the data of a full-scale experiment.
+Expert data or assumptions about the object under study are usually required at various stages of model inferring.
+These data may be inaccurate, limited or unknown, which can negatively affect the accuracy and adequacy of the model.
+Automated construction methods allow to reduce the probability of human errors in model selection and parameters tuning.
+
+When working with metric tree models with functions on edges, the participation of subject matter experts is resorted to.
+Expert data is used to determine the properties of functions on the edges of the tree.
+This information allows to establish the \textit{configuration} of the model, where each function on the tree belongs to a given family and is characterized by functional parameters available for tuning.
+In the absence of expert data or in order to minimize the influence of the expert on the result, it is necessary to consider a set of all possible models differing in the types of functions and functional parameters.
+For example, when building models of demographic histories for each population, piecewise-defined functions are considered consisting of functions of the three most popular types: constant, linear, and exponential.
+Such an enumeration of configurations leads to an increase in the time required to infer the model.
+The greater the number of allowed function types is, the more time will be required.
+Additionally, it is required to keep track of the model complexity, the number of its parameters and overfitting.
+
+Methods for tuning model parameters may also be limited in their degree of automation and require expert input.
+For example, local search methods require the involvement of an expert to determine initial parameter values, and the effectiveness of the tuning depends on this choice.
+
+Thus, when modeling real-world events in the form of a metric tree with functions on edges it is \textit{relevant} to develop specialized models and methods for automatic inference and tuning of models in order to minimize the influence of expert data on the result of modeling, which is considered in this dissertation on the example of the task of inferring demographic histories from genetic data.
+
+A population is a group of individuals of the same species living in a specific area.
+The \textit{demographic history of populations} is the history of populations' development and evolution, including events such as changes in population size, population splits, migration, and natural selection.
+The reconstruction of the demographic history from genetic data is called \textit{demographic inference}.
+Demographic histories are essential for dating historical events which have left no written records~\cite{goebel2008late, mellars2006going}, and they hold significance in fields such as conservation genetics \cite{nikolic2022stepping} and even medicine \cite{nielsen2007recent}.
+
+Various statistical and algorithmic methods allow inference of demographic history models in the form of metric trees with functions on the edges and tuning their continuous parameters from genetic data.
+In a case of demographic histories, the metric tree is the tree that defines the separation of populations, and the functions on the edges are the dynamics of population change.
+As dynamics, we consider piecewise defined functions consisting of functions of the three most popular types: constant, linear, and exponential.
+When building models, it is necessary to determine the number of time intervals, as well as the type of dynamics for each piecewise defined function.
+
+Expert data is also involved at the stage of tuning the parameters of demographic history models, for which a combination of numerical simulation and optimization methods are used.
+Numerical modeling methods are used to calculate the likelihood function, which allows estimating the degree of model fit to genetic data.
+Local optimization methods are used to find the parameters that provide the maximum likelihood value.
+It is these methods that are limited in the degree of automation: they require expert data to determine the initial values of parameters, and their efficiency depends on this choice.
+
+The task of demographic inference is further complicated by the need for the user to implement the program code of the model and the algorithm for parameters' tuning.
+Numerical modeling methods used by existing solutions have different capabilities and stability, and the user can apply several of them to compare the results.
+However, when applying different software solutions simultaneously, the user is faced with the need to specify the same models using different interfaces.
+
+Thus, the development of methods for automatic construction and tuning for models of metric trees with functions on edges will lead to minimizing the influence of expert data, and, consequently, to improving the quality of modeling of real-world events using real data from experiments.\\
+
+
+% A population is a group of individuals of the same species living in a specific area.
+% The \textit{demographic history of populations} is the history of populations' development and evolution, including events such as changes in population size, population splits, migration, and natural selection.
+% By using various statistical and algorithmic methods, it is possible to reconstruct the demographic history from genetic data of individuals.
+% This reconstruction is called \textit{demographic inference}.
+% Demographic histories are essential for dating historical events which have left no written records~\cite{goebel2008late, mellars2006going}, and they hold significance in fields such as conservation genetics \cite{nikolic2022stepping} and even medicine \cite{nielsen2007recent}.
+%
+% In order to constrain the search space, existing methods for demographic inference usually involve the usage of demographic models --- parametric families of demographic histories.
+%
+% Currently, numerous methods and software tools provide means to specify a model of interest and to estimate model parameters from genetic data in order to obtain demographic history.
+% These methods involve a combination of numerical modeling and optimization methods.
+% They require a user (bioinformatician or systems biologist) to specify the model of the demographic history using the interface provided by the chosen software.
+% Numerical modeling methods aim to compute the likelihood function of the demographic history and the data.
+% The value of this function determines the optimality of the parameters and serves as the objective function in optimization algorithms.
+% The vast majority of methods utilize local optimization algorithms to search for the parameters of the given model.
+% These algorithms require the initial parameter values, and their effectiveness depends on this choice.
+
+% Despite the availability of methods for demographic inference, the selection of models and the initial parameter values still require manual tuning and expert knowledge.
+% As a result, it limits methods to obtain the best demographic history.
+% In order to improve accuracy and reliability, users have to consider multiple models, find optimal parameters for each of them, and compare the results.
+% The dynamics of population size change are always fixed in the considered models and, therefore, models primarily differ in values of these dynamics.
+% Typically, three most popular dynamics are examined: constant population size, linear change, and exponential change.
+
+% The problem of demographic inference is further complicated by the need for users to implement model code and parameter inference algorithms themselves.
+% The numerical modeling methods used in existing solutions for likelihood evaluations have different capabilities and stability, and users may apply several methods to compare results.
+% However, when using multiple software solutions simultaneously, users are faced with the obligation of specifying the same models using different interfaces.
+
+% Therefore, the process of demographic inference requires significant time investment, especially when dealing with multiple populations.
+% It also requires the user to have programming skills and knowledge about the studied biological species.
+% These limitations restrict the capabilities of existing approaches for inferring demographic histories of populations and constructing models.\\
+
+\textbf{State of the art.}
+Graph models are studied and applied to solve a wide range of problems.
+The works of A.M.~Raygorodsky~\cite{райгородский2010модели,райгородский2022модели} contain descriptions and examples of application of random graph models.
+Graph-based probabilistic models such as Bayesian networks are extensively presented in the works of I.~Ben-Gal~\cite{ben2008bayesian} for modeling industrial systems~\cite{gruber2012efficient}, classification~\cite{gruber2019targeted}, or identification of transcription factor binding sites~\cite{ben2005identification}.
+L.~Clark and D. Pregibon~\cite{clark2017tree} described examples of applications of tree-based models, which include, for example, decision trees~\cite{kotsiantis2013decision}.
+
+The theory of metric graphs was formed by the works of V.G.~Boltiansky~\cite{болтянский1978комбинаторная}, P.S.~Soltan~\cite{soltan1973экстремальные,болтянский1978комбинаторная} and A.~Dress~\cite{dress1984trees}.
+The properties of metric trees and the metric spaces generated by them have been studied by A.~Dress~\cite{dress1984trees}, B.~Buneman~\cite{buneman1974note} and D.~Aldous~\cite{aldous1991continuum_i,aldous1991continuum,aldous1991continuum,aldous1993continuum}.
+In the works of A.S.~Matveev and S.I.~Matveev~\cite{матвеев2010создание,лёвин2011системы,матвеев2013интеллектуальная} metric graphs were applied in the construction of coordination models for intelligent navigation.
+
+The development of models approximating implicit functions is also actively pursued by many scientists.
+The most widespread application, described in the works of L.~Fahrmeir~\cite{fahrmeir2013regression} and R.~Snee~\cite{snee1977validation}, these models have received for solving regression problems.
+When using piecewise-determined function models, the general form of the result functions is usually fixed, such as constructing piecewise-constant~\cite{schiffels2020msmc,dai2008nonlinear}, piecewise-linear~\cite{leenaerts2013piecewise}, or piecewise-exponential~\cite{friedman1982piecewise} models.
+The number of function breakpoints as well as their positions are unknown characteristics of piecewise-defined function models.
+In~\cite{muggeo2020selecting,malash2010piecewise}, methods for automatic model inference are presented to solve a piecewise-exponential regression problem, where the number of function breakpoints is determined using Bayesian information criterion (BIC) and Akaike information criterion (AIC)~\cite{akaike1974new}, respectively.
+
+Models of metric trees with functions on graphs are a combination of metric tree models and functional models on edges.
+Quantum graphs that are metric graphs with differential operators on edges and their applications are discussed in detail in the works of G.~Berkolaiko~\cite{berkolaiko2006quantum,berkolaiko2013introduction}.
+Metric trees with functions on edges are used to model demographic histories of populations in the works of R.~Gutenkunst~\cite{gutenkunst2009inferring}, J.~Kamm~\cite{kamm2020efficiently}, A.~Ragsdale and S.~Gravel~\cite{ragsdale2019models, ragsdale2020unbiased}.
+However, the methods presented in these works assume that the user defines and fixes the general form of the piecewise-defined function on the edges of the tree, and sets the initial values of model parameters for tuning procedure that use local optimization methods.
+The works of D.~Portik~\cite{portik2017evaluating, leache2019exploring} and R.~Gutenkunst~\cite{blischak2020inferring} presented global optimization methods for parameter tuning of population history models that minimize but still require user involvement.
+A general application of numerical optimization methods for different problems is presented in the classic paper by B.T. Polyak~\cite{поляк1983введение}, and a description of modern global optimization methods can be found in~\cite{пантелеев2013методы}.
+
+At the time the author began his research (in 2017), there was no method for automatic model inference and tuning for metric tree models with functions on edges.
+By the end of the dissertation research, the first alternative solution for a method for automatic model selection emerged, applied for the demographic inference problem~\cite{rippe2021environmental}.
+However, the method allows analyzing models defined in a specific catalog and only for inferring demographic histories of \emph{two} populations.
+Furthermore, the selection of the best model is made under the assumption of data independence, which is not always correct.\\
+
+% The foundation of the demographic inference was built by the Japanese biologist M.~Kimura in his works in 1962~\cite{kimura1962probability, kimura1964diffusion} and 1969~\cite{ohta1969linkage}, as well as by scientists W.~Hill and A.~Robertson in their works in 1966~\cite{hill1966effect} and 1968~\cite{hill1968linkage}.
+% However, it was only with the development of sequencing techniques and the accumulation of genetic data that these methods began to be actively utilized.
+% Methods to infer specific characteristics of the demographic histories, for example, population growth rates~\cite{kuhner1998maximum}, were developed in the late 20th century.
+
+% Methods for demographic inference of complex models with greater number of parameters appeared in the early 21st century.
+% They were based on the idea of finding parameter values that maximize the likelihood function for the observed data.
+% However, the development was focused mainly on methods for likelihood computation, while optimization was left to classical local search algorithms implemented in popular publicly available libraries such as SciPy~\cite{virtanen2020scipy}.
+% The libraries \dadi~\cite{gutenkunst2009inferring}, \momi~\cite{kamm2020efficiently}, \moments~\cite{jouganous2017inferring}, and \momentsLD~\cite{ragsdale2019models, ragsdale2020unbiased} are among the most popular software tools for demographic inference.
+% The \dadi library implements the diffusion approximation method for likelihood computation, \moments  and \momentsLD libraries employ the method of moments.
+% All of these methods are based on numerical modeling.
+% The popular libraries for parameter inference of complex demographic history models are presented in Table~\ref{tab:synopsis:list_dem_methods}.
+
+% It is worth noting that the complexity of likelihood computation methods scales with the number of analyzed populations.
+% As a result, some software tools only support a limited number of populations for the analysis.
+% For example, \dadi and \moments have a complexity of likelihood computation methods that scales exponentially, and they can only analyze up to three and five populations, respectively.
+
+% \begin{table}[ht]
+%     \centering
+%     \resizebox{\linewidth}{!}{%
+%     \begin{tabular}{|l|l|l|l|l|l|l|}
+%         \hline
+%         Software & Year & Interface &  Likelihood & Optimization        & Requirement & Supported \\
+%             &     & for model &   evaluation  & methods  & of the initial & number of \\
+%                    &     & specification & method &              &                  parameters & populations \\
+                   
+%         \hline
+%         \dadi   & 2009  & Yes & Diffusion & Four local & Yes & Up to three \\
+%                 &       & (models & approximation    & search methods & & \\
+%                 &       &  of I class) &              & plus one global      & & \\
+%                 &       & &              & search method     & & \\
+%                 &       & &              & (2020)     & & \\
+%         \hline
+%         \moments& 2017  & Yes & Moment closure& Four local &  Yes & Up to five \\
+%                 &      & (models & method for allele  & search methods  & & \\
+%                 &   &  of I class) & counts statistic &      & & \\
+%         \hline
+%         \momentsLD& 2019 & Yes & Moment closure & Four local & Yes & Any \\
+%                 &       &  (models & method for linkage & search methods  & & \\
+%                 &      & of I class) & disequlibrium &       & & \\
+%                 &      & & statistic &       & & \\
+%         \hline
+%         \momi   & 2020  & Yes & Continuous    & One method & Yes & Any \\
+%                 &   & (models    & Moran model  & truncated & & \\
+%                 &   &   of II class) &                & Newton & & \\
+%                 &    &   &                & method       & & \\
+%         \hline
+%         \textit{dadi-pipeline}   & 2017  & No & Method   & One method of & No & Up to three \\
+%                 &   & (interface    & from \dadi  & multiple rounds of& &\\
+%                 &   &  of \dadi) &                & Nelder-Mead & & \\
+%                 &    &    &                &  method       & & \\
+%         \hline
+%         \textit{moments-pipeline}   & 2019  & No & Method   & One method of & No & Up to five \\
+%                 &   & (interface     & from \moments  & multiple rounds of & &\\
+%                 &   &  of \moments) &                & Nelder-Mead & & \\
+%                 &    &    &                & method      & & \\
+%         \hline
+
+% %        \textit{fastsimcoal2} & 2013 
+% %          & Симуляция    & 1 алгоритм  & до $\infty$ &  Да & Да\\
+% %        & & процесса     & ECM-алгоритм & & & \\
+% %        & & коалисценции & (Expectation & & & \\
+% %        & &              & Conditional & & & \\
+% %        & &              & Maximization) & & & \\
+% %        \hline
+%     \end{tabular}%
+%     }
+%     \caption{Existing software tools for demographic inference from genetic data}
+%     \labelsyn{tab:synopsis:list_dem_methods}
+% \end{table}
+
+% There was no method available for demographic inference without a predefined model configuration at the time the research was started (in 2017).
+% Additionally, there was a lack of global optimization methods for efficient search of the maximum-likelihood model parameters.
+% All existing solutions required researchers to specify the model and provide the initial parameters' estimates for local search optimization algorithms.
+% It posed challenges for the main audience of these software tools and led to usage errors.
+% Furthermore, searching for model parameters for a large  populations' counts, like four and five populations in the \moments library, was computationally demanding.
+
+% D.~Portik introduced the software tools \textit{dadi pipeline} and \textit{moments pipeline} as wrappers for the \dadi and \moments libraries, respectively, in 2017 and 2019~\cite{portik2017evaluating, leache2019exploring}.
+% These tools provide a catalog of implemented models for the user to choose from, which eliminates the need for manual model specifications and reduces the probability of errors.
+% Moreover, \textit{dadi pipeline} and \textit{moments pipeline} implement a global search algorithm that sequentially executes multiple rounds of Nelder-Mead local optimization.
+% In order to address the issue of initial parameter selection, the authors proposed the usage of common parameter values across all models and the noise application to parameters before each optimization round.
+% Thus, the proposed method has several hyperparameters, including the number of local search rounds and the noise level applied to the parameters.
+% It is important to note that the optimal values of these hyperparameters, required to achieve global optima, were not determined and are left to the user's choice.
+
+% % The first publication of the author~\cite{noskova2020gadma} in 2020 addressed the inefficiency of existing optimizations and the lack of a method for automatic model selection.
+% % The class of extended models, a genetic algorithm for parameter tuning, and a method for automatic model selection described in this thesis were presented in the paper.
+% % After the preliminary non-peer-reviewed publication of this article and its submission to a journal in 2019, the authors of the \dadi library incorporated the BOBYQA global search algorithm~\cite{powell2009bobyqa} into the library.
+% % However, it still requires the initial parameters to be set by users~\cite{blischak2020inferring}.
+
+% % The alternative solution for the automatic model selection of the demographic history for \emph{two} populations was presented~\cite{rippe2021environmental} a year after the publication of the author's article~\cite{noskova2020gadma}.
+% % The presented software is a wrapper for \moments and contains a large catalog of more than 100 models for parameters tuning, and comparison.
+% % The selection of the best model assumes data independence, which is not always valid.
+% % The latest version of this software tool uses a genetic algorithm developed in this work as the optimization method.
+
+% % The emergence of new methods for model selection and optimization, as well as the active use of the methods developed by the author, demonstrates the increased interest in the problem addressed in this work, making it highly relevant.\\
+
+% By the end of the dissertation research, the authors of the \dadi library incorporated the BOBYQA global search algorithm~\cite{powell2009bobyqa} into the library.
+% However, it still requires the initial parameters to be set by users~\cite{blischak2020inferring}.
+% Moreover, the alternative solution to the automatic demographic model selection method presented in this study was introduced~\cite{rippe2021environmental}.
+% However, the proposed software allows analyzing data for only \emph{two} populations using \moments.
+% The selection of the best model assumes data independence, which is not always valid.
+% The latest version of this software tool uses a genetic algorithm developed in this work as the optimization method.\\
+
+The \textbf{aim} of this thesis is to improve the quality of computer modeling of real-world events by developing methods, and software packages for automatic inference and tuning of metric tree models with functions on edges.\\
+
+In order to achieve this aim, the following \textbf{tasks} have been defined and completed:
+\begin{itemize}
+    \item investigate the current state of the subject area, refine the problem, and determine methods for evaluating the results;
+    \item formalize the problem of model inferring and tuning for metric tree models with functions on edges;
+    \item develop a method for automatic tuning of metric tree models with functions on edges based on a combination of global and local optimization methods;
+    \item develop a method for automatic selection of metric tree models with piecewise defined functions on edges;
+    \item design and implement a software framework that incorporates the developed models and methods for inferring the demographic history of populations from genetic data;
+    \item conduct experimental studies confirming the effectiveness of the developed models and methods, as well as their applicability for inferring the demographic history of populations from genetic data, analyze the results of experiments.\\
+\end{itemize}
+
+The \textbf{scientific novelty} of the thesis is as follows:
+%(1) a class of extended models that includes models with discrete parameters for population size dynamics is developed;
+(1) methods based on a combination of global and local optimization techniques for parameter tuning of a given metric tree model with functions on edges are developed;
+(2) method for automatic selection of metric tree model with piecewise-defined functions on edges that does not require expert involvement is developed.\\
+%(4) new population demographic histories that provide a better likelihood values compared to previous results obtained using local search methods and expert participation are derived for the subject area.\\
+
+The \textbf{theoretical significance} of the thesis lies in = extension of the classical formulation of the problem of tuning a metric tree model with functions on edges not only as a problem of tuning the parameters of a given model, but also as a problem of selecting the model itself automatically.
+The obtained modeling and tuning methods are applicable to arbitrary metric tree models with functions on edges.
+Moreover, the developed optimization methods can be used or adapted for optimization problems in other scientific fields.\\
+
+The \textbf{practical significance} of the thesis is determined by:
+\begin{itemize}
+    \item the extension of the scientific and practical toolkit of bioinformaticians with methods and algorithms for demographic inference;
+    \item the open-access source code of the developed software framework GADMA, which is available for reuse at the following address: \url{https://github.com/ctlab/GADMA};
+    \item the applicability of the developed methods for the analysis of genetic data;
+    \item incorporation of the developed method based on a genetic algorithm into a third-party software~\cite{rippe2021environmental}.\\
+\end{itemize}
+
+\newpage
+\textbf{Principal statements of the thesis:}
+\begin{enumerate}[label={\arabic*.}]
+    \item The method of modeling and parameter tuning of metric tree models with functions on edges based on field experiment data, that contains models with continuous functional parameters, characterized in that for the purpose of automatic tuning without involving expert data it uses models with discrete parameters that define families of functions, as well as global optimization methods --- genetic algorithm and Bayesian optimization, and a set of programs implementing it.
+    \item The method of automatic selection of metric tree model with functions on edges with different number of parameters and tuning of these parameters basen on field experiment data, that contains the Akaike information criterion for model comparison, characterized in that in order to increase the level of automatization and to provide an opportunity to tune not only the model parameters, but also the model itself, it includes a method of increasing the number of time intervals for piecewise-defined functions on edges of a tree, as well as a set of programs implementing it.
+\end{enumerate}
+
+\textbf{Research methods.} The study utilized optimization methods, numerical methods, probability theory and mathematical statistics, machine learning techniques, and methods for conducting experimental research.\\
+
+\textbf{Soundness and correctness} of scientific results obtained in this thesis are ensured by the correct utilization of methods, the formulation of well-justified problem statements, and the extensive experimental investigations that cover the developed technologies and algorithms.
+The population demographic histories obtained with the developed methods on verified simulated data are consistent with the original histories used for modeling.
+The results obtained from real data align with previously published studies~\cite{gutenkunst2009inferring, jouganous2017inferring, nielsen2017tracing, verissimo2017world, king2015genetic, сивцева2020геном}.\\
+
+\textbf{Compliance with specialty requirements.}
+In accordance with the specialty passport 1.2.2 --- «Mathematical modeling, numerical methods, and software frameworks (computer science)» the dissertation belongs to the following fields of research:
+
+\textbf{Point 2 of the specialty passport} «Development, justification, and testing of efficient computational methods using modern computer technologies».
+Methods for tuning the parameters of metric tree models with functions on edges based on numerical optimization methods were developed, justified and tested.
+
+\textbf{Point 4 of the specialty passport} «Development of new mathematical methods and algorithms for interpretation of natural experiment on the basis of its mathematical model».
+This dissertation study presents methods for building metric tree models with functions on edges from natural experiment data in order to analyze real world events.\\
+
+% \textbf{Point 9 of the specialty passport} «Setting up and conducting computational experiments, statistical analysis of their results, including with the use of modern computer technologies (computer sciences)».
+% The development of the GADMA software package allowed to conduct many computational experiments to infer demographic histories from genetic data.
+% The results of the computational experiments are analyzed, and different models are compared using statistical methods such as Akaike's information criterion and likelihood ratio test.\\
+
+\newpage
+\textbf{Dissemination.}
+The main results of the thesis were presented at the following conferences:
+
+\begin{itemize}
+    \item International Congress «VII Congress of the Vavilov Society of Geneticists and Breeders dedicated to the 100th anniversary of the Department of Genetics, SPbSU, and associated symposia», 2019, St. Petersburg, Russia;
+    \item Moscow Conference on Computational Molecular Biology, 2019, Moscow, Russia;
+    \item Probabilistic Modeling in Genomics, 2019, Aussois, France;
+    \item Probabilistic Modeling in Genomics, 2021, virtual;
+    \item Moscow Conference on Computational Molecular Biology, 2021, Moscow, Russia;
+    \item Probabilistic Techniques in Analysis: Spaces of Holomorphic Functions, 2021, Sochi, Russia;
+    \item LI Scientific and educational conference of ITMO University, 2022, ITMO University, St. Petersburg, Russia;
+    \item Probabilistic Modeling in Genomics, 2022, Oxford, UK;
+    \item The XI Congress of Young Scientists, 2022, ITMO University, St. Petersburg, Russia;
+    \item Conservation Genomics at the Population Level, 2022, Cambridge, UK;
+    \item Probabilistic Modeling in Genomics, 2023, Cold Spring Harbor, NY, USA;   
+    \item The XII Congress of Young Scientists, 2023, ITMO University, St. Petersburg, Russia;
+    \item  Society for Molecular Biology and Evolution Meeting (SMBE23), 2023, Ferrara, Italy.\\
+\end{itemize}
+
+\textbf{Awards} 
+\begin{itemize}
+    \item Bronze Award in the 17th Human-Competitive Awards category at the Genetic and Evolutionary Computation Conference (GECCO) virtual conference in 2020.
+    \item Winner of the System Biology Fellowship from Skolkovo Institute of Science and Technology for the project «Computational methods for unsupervised demographic inference of multiple populations from genomic data» in 2021. The number of winners is five per country per year.\\
+\end{itemize}
+
+\textbf{Publications}
+
+Based on the results presented in the thesis, eight articles were published in peer-reviewed scientific journals included in the international abstract databases and citation systems Scopus and Web of Science.\\
+
+
+\textbf{Personal contribution}
+
+\begin{enumerate}[label=\arabic*.]
+    \item 
+    In the publication~\cite{noskova2020gadma} Noskova E. --- development and implementation of genetic algorithm and method for automatic selection of demographic history model from genetic data, conduction of the experimental studies (80\%); Ulyantsev~V. --- supervision on problem formulation, selection, and justification of theoretical foundations of scientific research (10\%); Koepfli~K.P., O'Brien~S.J. --- advice in conducting experimental studies and writing a paper (5\%); Dobrynin~P. --- supervision on problem formulation (5\%).
+
+    \item %\cite{noskova2022gadma2}: 
+    In the publication~\cite{noskova2023gadma2} Noskova E. --- development and implementation of methods, software for demographic inference from genetic data, conduction of the experimental studies (85\%); Abramov~N., Iliutkin~S., Sidorin~A. --- software development (10\%); Dobrynin~P., Ulyantsev~V. --- supervision on problem formulation, selection, and justification of theoretical foundations of scientific research (5\%).
+
+    \item %\cite{noskova2022bayesian}: 
+    In the publication~\cite{noskova2023bayesian} Noskova E. --- development and implementation of the Bayesian optimization method for demographic inference from genetic data, conduction of the experimental studies (90\%); Borovitskiy~V. --- recommendations on problem formulation, selection, and justification of theoretical foundations of scientific research (10\%).
+
+    \item %\cite{zhernakova2020genome}: 
+    In the publication~\cite{zhernakova2020genome} Noskova E. --- demographic inference of the history of three  modern human populations (10\%); Ulyantsev~V. --- supervision (5\%); other co-authors --- collection and analysis of the genetic data (85\%).
+
+    \item %\cite{nikolic2022stepping}: 
+    In the publication~\cite{nikolic2022stepping} Noskova E. --- demographic inference of the history of two and three populations of blue sharks (10\%); the other co-authors --- collection and analysis of the genetic data (90\%).
+
+    \item %\cite{adrion2020community}: 
+    In the publication~\cite{adrion2020community} Noskova E. --- software development and testing of the genetic data simulations (5\%); other co-authors --- software development, testing, and conduction of the experimental studies (95\%).
+
+    \item %\cite{lauterbur2023expanding}: 
+    In the publication~\cite{lauterbur2023expanding} Noskova E. --- implementation of published demographic histories in the software for genetic data simulations (5\%); other co-authors --- software development (95\%).
+    
+    \item %\cite{gower2022demes}: 
+    In the publication~\cite{gower2022demes} Noskova E. --- software development for the representation of the demographic histories (5\%); other co-authors --- software development (95\%).\\.
+\end{enumerate}
+
+
+\textbf{Scope and structure of the work}
+
+% The dissertation consists of an introduction, four chapters, a conclusion, and an appendix.
+% The full length of the dissertation is
+% \formbytotal{TotPages}{pages}{}{}{}, including
+% \formbytotal{totalcount@figure}{figures}{}{}{},
+% \formbytotal{totalcount@table}{tables}{}{}{}, and eight listings.
+The dissertation consists of an introduction, four chapters, a conclusion, and an appendix.
+The full length of the dissertation is 396 pages, including
+120 figures, 16 tables and eight listings.
+The list of references contains 171 references.

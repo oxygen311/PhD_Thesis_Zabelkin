@@ -1,0 +1,150 @@
+%!TEX root = ../dissertation.tex
+
+\usepackage{xpatch}% or use http://tex.stackexchange.com/a/40705
+\def\makenamesetup{%
+  \def\bibnamedelima{~}%
+  \def\bibnamedelimb{ }%
+  \def\bibnamedelimc{ }%
+  \def\bibnamedelimd{ }%
+  \def\bibnamedelimi{ }%
+  \def\bibinitperiod{.}%
+  \def\bibinitdelim{~}%
+  \def\bibinithyphendelim{.-}}    
+\newcommand*{\makename}[3]{\begingroup\makenamesetup\xdef#1{#2, #3}\endgroup}
+
+\newbibmacro*{name:bold}[2]{%
+  \makename{\currname}{#1}{#2}%
+  \makename{\findname}{\lastname}{\firstname}%
+  \makename{\findinit}{\lastname}{\firstinit}%
+  \ifboolexpr{ test {\ifdefequal{\currname}{\findname}}
+            or test {\ifdefequal{\currname}{\findinit}} }{\bfseries}{}}
+
+\newcommand*{\boldname}[3]{%
+  \def\lastname{#1}%
+  \def\firstname{#2}%
+  \def\firstinit{#3}}
+\boldname{}{}{}
+
+\xpretobibmacro{name:family}{\begingroup\usebibmacro{name:bold}{#1}{#2}}{}{}
+\xpretobibmacro{name:given-family}{\begingroup\usebibmacro{name:bold}{#1}{#2}}{}{}
+\xpretobibmacro{name:family-given}{\begingroup\usebibmacro{name:bold}{#1}{#2}}{}{}
+\xpretobibmacro{name:delim}{\begingroup\normalfont}{}{}
+
+\xapptobibmacro{name:family}{\endgroup}{}{}
+\xapptobibmacro{name:given-family}{\endgroup}{}{}
+\xapptobibmacro{name:family-given}{\endgroup}{}{}
+\xapptobibmacro{name:delim}{\endgroup}{}{}
+
+%%% This is a place to put all definitions needed for this particular thesis to work
+
+% Various definitions depending on how the bibliography is done
+
+\addbibresource{dissertation.bib}
+\DeclareSourcemap{		
+    \maps{
+        \map{
+            \step[fieldsource=medium, match=\regexp{Электронный\s+ресурс}, final]
+            \step[fieldset=media, fieldvalue=eresource]
+        }
+    }
+}
+
+% Definitions and includes related for the text
+
+% \DeclareRobustCommand{\todo}{\textcolor{black}}
+\newcommand{\revise}[1]{\textcolor{red}{#1}}
+\graphicspath{{images/}}
+
+\newcommand{\hamm}[1]{\mathcal{H}(#1)}
+\newcommand{\tobinary}[1]{\mathcal{B}(#1)}
+\newcommand{\theop}{\mathcal{X}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\pgfplotscreateplotcyclelist{myplotcycle}{%
+black\\%1
+red!80!black\\%2
+violet!80!black\\%3
+gray!80!black\\%4
+orange\\%5
+brown!80!black\\%6
+cyan!80!black\\%
+green!70!black\\%7
+green\\%8
+blue!60!black\\%9
+teal\\%10
+magenta!70!black\\%11
+yellow!90!black\\%12
+}
+
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\definecolor{darkred}{rgb}{0.7,0.1,0.1}
+\definecolor{middarkgrey}{rgb}{0.35,0.35,0.35}
+\definecolor{darkblue}{rgb}{0.1,0.1,0.5}
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[normalem]{ulem}
+\usepackage{url}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows, automata, positioning, arrows}
+\usepackage{pstricks}
+% \tikzset{
+%   ->, % makes the edges directed
+%   >=stealth', % makes the arrow heads bold
+%   node distance=1.9cm, % specifies the minimum distance between two nodes. Change if necessary.
+%   every state/.style={thick, fill=gray!10, minimum size = 0pt}, % sets the properties for each ’state’ node
+%   initial text=$ $, % sets the text that appears on the start arrow
+% }
+
+% \newcommand{\inote}[1]{\medskip\noindent$[$\textcolor{darkred}{Илья}: \emph{\textcolor{middarkgrey}{#1}}$]$\medskip}
+% \newcommand{\inote}[1]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,inline]{#1}}
+\newcommand{\needtodo}[1]{\todo[linecolor=Red,backgroundcolor=Red!25,bordercolor=Red,inline]{#1}}
+
+\newcommand{\inote}[1]{}
+% \newcommand{\needtodo}[1]{}
+
+\newcommand{\pto}{\mathrel{\ooalign{\hfil$\mapstochar$\hfil\cr$\to$\cr}}}
+\newcommand{\chresults}[1]{\section*{Выводы по главе~#1}
+\addcontentsline{toc}{section}{Выводы по главе~#1}
+}
+% \newcommand{\chresults}[1]{}
+\newcommand{\insection}[1]{В \textbf{разделе~#1}}
+\newcommand{\insectionen}[1]{In the \textbf{section~#1}}
+
+
+% my definitions
+% local definitions
+\usepackage{xspace} % prevents eating spaces
+\newcommand{\dadi}[0]{$\partial$a$\partial$i\xspace}
+\newcommand{\moments}[0]{\textit{moments}\xspace}
+\newcommand{\momentsLD}[0]{\textit{momentsLD}\xspace}
+\newcommand{\momi}[0]{\textit{momi2}\xspace}
+\newcommand{\fastsimcoal}[0]{\textit{fastsimcoal2}\xspace}
+\newcommand{\stdpopsim}[0]{\textit{stdpopsim}\xspace}
+\newcommand{\demes}[0]{\textit{demes}\xspace}
+\newcommand{\gadma}[0]{GADMA\xspace}
+
+\renewcommand{\v}{\relax\ifmmode\expandafter\boldsymbol\else\expandafter\textv\fi} % vector
+\newcommand{\m}{\expandafter\mathbf} % matrix
+
+
+% scale math mode
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+
+% tablenotes
+\usepackage[flushleft]{threeparttable}
+
+% start section after all figures and tables of previous section
+\usepackage{placeins}  % \FloatBarrier
+
+% P is centered column in table with sizes
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+% define new chi that is located inline
+\DeclareRobustCommand{\rchi}{{\mathpalette\irchi\relax}}
+\newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}} % inner command, used by \rchi

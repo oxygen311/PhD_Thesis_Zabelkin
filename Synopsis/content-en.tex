@@ -1,0 +1,393 @@
+%!TEX root = ../dissertation.tex
+
+\section*{Thesis overview}
+
+\input{common/characteristic-en}
+
+\newpage
+\section*{Thesis contents}
+
+The relevance of the scientific research conducted within the framework of this dissertation is justified in the \textbf{introduction}.
+The state of the art of the demographic inference from genetic data is described, and an overview of the methods for modeling demographic histories is provided.
+The goals and objectives of the research are formulated, and the scientific novelty, theoretical significance, and practical implications of the work are described.
+Additionally, the principal statements of the thesis are listed.
+
+The \underline{\textbf{first chapter}} presents a comprehensive overview of the subject area.
+It includes the definition of the demographic history of populations and the description of the existing methods for inferring demographic histories from genetic data.
+
+The fundamental definitions in population genetics used in this dissertation are described in \textbf{Section 1.1}.
+Population genetics is an important field within genetics that investigates the changes in the genetic composition of populations and their evolution.
+It addresses various tasks such as determining population structure, constructing phylogenetic trees, and inferring the demographic history of populations.
+The section begins with the formal definition of the demographic history of populations.
+
+\emph{Demographic history of populations} refers to the populations' history of evolution and development.
+It includes information about population splits, population size changes, migration rates, \textit{inbreeding coefficients} (the degree of consanguineous relationships), and more.
+Examples of visual representations of demographic histories are shown in Figure~\ref{fig:syn_rus:dem_inf:dem_his_examples}. 
+The colored areas demonstrate how populations split --- the population tree.
+Information about population size is depicted by the width of those areas, and arrows between them represent migrations.
+Time in demographic histories is often measured in generations or years and is represented along the y-axis.
+
+\begin{figure}[b]
+    \centering
+    \begin{subfigure}[b]{.33\textwidth}
+    \includegraphics[width=\textwidth]{images/part1/dem_history/1d_model_fixed_en.pdf}
+    \caption{}
+    \labelsyn{fig:syn_rus:dem_inf:dem_his_examples_1}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.33\textwidth}
+    \includegraphics[width=\textwidth]{images/part1/dem_history/2d_model_isolation_fixed_en.pdf}
+    \caption{}
+    \labelsyn{fig:syn_rus:dem_inf:dem_his_examples_2}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.33\textwidth}
+    \includegraphics[width=\textwidth]{images/part1/dem_history/2d_model_migration_fixed_en.pdf}
+    \caption{}
+    \labelsyn{fig:syn_rus:dem_inf:dem_his_examples_3}
+    \end{subfigure}
+    \caption{Examples of visual representations of the demographic histories of one and two populations}
+    \labelsyn{fig:syn_rus:dem_inf:dem_his_examples}
+\end{figure}
+
+
+%\newpage
+
+\textit{Demographic inference} is the reconstruction of the demographic history from genetic data.
+The problem of demographic inference and its solutions are described in \textbf{Section 1.2}.
+The existing solutions aim to find demographic history using parametric models.
+The section includes the description of the main methods and components of existing methods for demographic inference.
+A brief description of well-known software tools implementing these methods, namely \dadi, \moments, \momi, and \momentsLD, is also provided.
+
+Parametric models are used for searching demographic histories of populations.
+These models are metric trees with functions defined on edges.
+Models usage allows constraining the search space and tuning the model parameters using optimization methods.
+Figure~\ref{fig:model_def2} shows a model example in the form of metric tree with functions on edges that describes the demographic history of two populations.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/part1/2d_model_metric_tree_2.pdf}
+    \caption{Example of the model of demographic history of two populations in the form of a metric tree with functions on edges}
+    \labelsyn{fig:model_def2}
+\end{figure}
+
+The problem of inferring the demographic history of populations from genetic data involves \textit{parameter tuning} of a given parametric model, i.e. finding model parameters that maximize the likelihood function of the genetic data (Figure~\ref{fig:part1:deminf:general_scheme}).
+Existing software solutions differ in their model specification interfaces, likelihood computation methods, and parameter optimization methods.
+
+\begin{figure}[ht]
+\includegraphics[width=0.7\textwidth]{images/part1/dem_history/general_scheme_en.pdf}
+\caption{Example input and output of existing software solutions for the demographic history inference from genetic data}
+\labelsyn{fig:part1:deminf:general_scheme}
+\end{figure}
+
+Two classes of demographic history models used in existing solutions are described in \textbf{Section 1.3}, along with methods for comparing models with different numbers of parameters.
+
+\textit{Models of the first class} are used in the software solutions \dadi, \moments, and \momentsLD.
+They are represented as a sequence of elements corresponding to time intervals, population splits, pulse migrations, and inbreeding events (Figure~\ref{fig:dadi:model_spec}).
+These models have only continuous parameters, and the dynamics of population size (constant, linear, or exponential) are fixed within these models.
+
+\begin{figure}[b]
+\centering
+\includegraphics[width=\linewidth]{images_2/dadi_model_en.pdf}
+\caption{Example specification of the first class model using the \dadi library interface}
+\labelsyn{fig:dadi:model_spec}
+\end{figure}
+
+\textit{Models of the second class} are used in the software solution \momi.
+They are represented as a set of events related to changes in population size, population splits, and single migrations.
+Models of the second class also have only continuous parameters and fixed dynamics of population size.
+However, they are more limited compared to models of the first class, for example, they do not support linear population size changes or continuous migrations.
+
+The model selection problem is generally stated as follows: choose the model that is most suitable for the data.
+A simple model with a small number of parameters may not reflect some information in the data.
+On contrary, the complex model with a large number of parameters may overfit to noise in the data and ultimately model the underlying process incorrectly.
+To compare different models and choose the best one, the Akaike information criterion (AIC)\cite{akaike1974new}, Bayesian information criterion (BIC)\cite{schwarz1978estimating}, and likelihood ratio test~\cite{vuong1989likelihood} are commonly used.
+
+An overview of existing methods for computing the likelihood of genetic data given a specified demographic history is provided in \textbf{Section 1.4}.
+The section includes definitions of key biological and genetic concepts, such as DNA, genes, alleles, and genotypes.
+The main data statistics are described, including the allele frequency spectrum and statistics based on linkage disequilibrium.
+Finally, the methods for likelihood evaluation implemented in the software solutions \dadi, \moments, \momi, and \momentsLD are described.
+
+In \textbf{Section 1.5}, a general description of local and global optimization methods is provided, highlighting the key differences between these two groups, along with an overview of existing optimization methods for parameter tuning in demographic history models using genetic data.
+Principally, local optimization methods such as the Broyden-Fletcher-Goldfarb-Shanno (BFGS) method~\cite{broyden1970convergence, fletcher1970new, goldfarb1970family, shanno1970conditioning}, the Nelder-Mead method~\cite{nelder1965simplex}, and the Powell method~\cite{powell1964efficient} are employed for demographic inference (Figure~\ref{fig:syn_ru:opt:opt_example}).
+Existing optimization methods for parameter tuning in models are limited to inference of continuous parameters only and require user involvement to specify initial model parameter and method hyperparameters, such as the number of restarts.
+The use of local optimization methods does not guarantee finding the global optimum.
+
+\begin{figure}[hb]
+\begin{subfigure}[b]{\linewidth}
+\centering
+\includegraphics[height=3.2cm]{images/part1/opt/example_3d_en.png}
+\caption{}
+\labelsyn{fig:syn_ru:opt:opt_example_3d}
+\end{subfigure}
+\begin{subfigure}[b]{.33\linewidth}
+\includegraphics[height=3.2cm]{images/part1/opt/example_bfgs.png}
+\caption{}
+\labelsyn{fig:syn_ru:opt:opt_example_bfgs}
+\end{subfigure}%
+\begin{subfigure}[b]{.33\linewidth}
+\includegraphics[height=3.2cm]{images/part1/opt/example_nelder_mead.png}
+\caption{}
+\labelsyn{fig:syn_ru:opt:opt_example_nelder_mead}
+\end{subfigure}%
+\begin{subfigure}[b]{.33\linewidth}
+\includegraphics[height=3.2cm]{images/part1/opt/example_powell.png}
+\caption{}
+\labelsyn{fig:syn_ru:opt:opt_example_powell}
+\end{subfigure}
+\caption{Examples of local optimization methods applied to maximize the function shown in panel (a): (b) BFGS method, (c) Nelder-Mead method, (d) Powell method.}
+\labelsyn{fig:syn_ru:opt:opt_example}
+\end{figure}
+
+Existing methods for selection of the best demographic model are described in \textbf{Section 1.6} alongside with modified approaches for model comparison.
+At the beginning of the research in 2017, there was no method available for automatic model selection for demographic inference.
+All model comparisons were performed manually by users using the Akaike information criterion or likelihood ratio test.
+A single software tool~\cite{rippe2021environmental} implementing an alternative automatic model selection method became available after the publication of the first article of this dissertation~\cite{noskova2020gadma}.
+However, it is limited to the analysis of two populations and assumes data independence.
+In general, genetic data contain dependencies, as certain genomic regions are inherited together.
+The Akaike information criterion and likelihood ratio test incorrectly favor models with more parameters when the data is dependent~\cite{gao2010composite}.
+Existing modifications of these criteria~\cite{coffman2016computationally} account for these dependencies.
+
+\underline{\textbf{Chapter 2}} describes the developed class of extended demographic models, two methods for parameter tuning using a combination of global and local optimization methods, and experimental studies of the developed models and methods.
+
+\textbf{Section 2.1} provides a description of the developed class of extended demographic models, its implementation, and usage examples.
+The first class of models was used as a prototype of the class of extended models.
+The proposed extended models include a new type of parameters for tuning, which are discrete parameters representing one of three dependencies: constant population size, linear change, or exponential change.
+The representation of the proposed model and the demographic histories for different parameter values (\texttt{Dyn}) are shown in Figure~\ref{fig:new_model:model}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\linewidth]{images_2/picture_2pops_model_3_en.pdf}
+\caption{Example of an extended demographic model for two populations and the corresponding demographic histories for different values of the parameter \texttt{Dyn}}
+\labelsyn{fig:new_model:model}
+\end{figure}
+
+The formal description of the first proposed method for parameters tuning of the extended models in \textbf{Section 2.2}.
+It is based on a combination of a genetic algorithm and local search is presented.
+The section includes the description of the general scheme of method, the operators of mutation and crossover in the genetic algorithm.
+The implementation details, and examples of applying the proposed method are also included.
+Additionally, the section presents the results of hyperparameter tuning of the genetic algorithm that was performed to increase efficiency of the method.
+
+\textbf{Section 2.3} describes the second developed method for parameter tuning of extended models, that is based on a combination of Bayesian optimization and local search.
+The description of Bayesian optimization and its components, an existing cross-validation method for hyperparameter selection, and the implementation of the developed method are provided.
+Similar to the genetic algorithm, hyperparameters of Bayesian optimization are tuned.
+Based on conducted experimental studies for manual tuning, an ensemble Bayesian optimization approach was proposed.
+
+\textbf{Section 2.4} includes conducted experimental studies of the developed method for parameter tuning that is based on a combination of a genetic algorithm and local search.
+
+First, experimental studies of the developed method in combination with the likelihood computation method implemented in \textit{moments} are conducted.
+A comparison is made between the developed method and the Powell method with restarts and the sequential runs of the Nelder-Mead method implemented in \textit{moments-pipeline}.
+Models from the first class and three sets of simulated data are used for comparison.
+The comparison shows that the developed method (GA) allows for more effective parameter tuning of models (Table~\ref{tab:part2:experiments:simulated_3:results}).
+Furthermore, the proposed extended models are considered, and their parameters are tuned using the developed method.
+The method correctly finds the parameters of the extended models, including the dynamics of population size changes.
+
+\begin{table}[bh!]
+\caption{Results of experimental studies for comparing parameter tuning methods on simulated data of three populations}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{|l | c | c | c |}
+\hline
+& Powell's method & \multirow{2}{*}{\textit{moments-pipeline}} & \multirow{2}{*}{GA}\\
+& with restarts & & \\
+\hline
+Mean number of likelihood evaluations & $22{,}475$ & $19{,}452$ & $21{,}651$ \\
+\hline
+Mean $f^{\text{\moments}}$ &$-11{,}178.62$ & $-11{,}179.82$ & $\mathbf{-11{,}178.45}$\\
+\hline
+Standard deviation of $f^{moments}$ & $0.40$ & $0.72$ & $\mathbf{0.15}$\\
+\hline
+Best $f^{\text{\moments}}$ & $-11{,}178.31$ & $-11{,}178.59$ & $\mathbf{-11{,}178.29}$\\
+\hline
+\end{tabular}%
+}
+\labelsyn{tab:part2:experiments:simulated_3:results}
+\end{table}
+
+Next, three experimental studies of the developed method in combination with the likelihood computation method implemented in \dadi are conducted.
+
+The method is applied to real data of Gaboon forest frog (\textit{Scotobleps gabonicus}), previously analyzed in~\cite{portik2017evaluating} using \textit{dadi-pipeline}.
+Demographic histories for three different pairs of populations are obtained using the same 12 models used in~\cite{portik2017evaluating}.
+For 92\% of the models, the developed method finds parameters with higher likelihood values compared to those obtained using \textit{dadi-pipeline}.
+In 5\% of cases, the likelihood values are the same, and only for one model (3\%) it is worse.
+
+On data of two puma populations (\textit{Puma concolor}), the developed method is compared to the BFGS method with restarts and the BOBYQA method with restarts.
+Two models, proposed and analyzed previously in~\cite{blischak2020inferring}, without and with inbreeding, are used.
+The results show that the developed method, on average, outperforms the BFGS and BOBYQA methods (Table~\ref{tab:part2:experiments:puma:puma_F_res}).
+Additional parameter tuning using an extended parameter bounds provides a demographic history with a higher likelihood value than previously achieved.
+
+\begin{table}[ht]
+    \centering
+    \caption{Results of 100 repeats of different methods for parameter tuning in case of model 2 with inbreeding for two puma populations}
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{|p{3.3cm}|P{1.9cm}|P{1.9cm}|P{1.9cm}|P{1.9cm}|P{1.9cm}|}
+         \hline
+         & \multicolumn{2}{c|}{BFGS} &  \multicolumn{2}{c|}{BOBYQA} & GA \\
+         &  1 restart & 16 restarts & 1 restart & 4 restarts &\\
+         \hline
+         Number of likelihood evaluations & $394\pm82$ & $6{,}245\pm324$ & $1{,}605 \pm 1{,}207$ & $6{,}095 \pm 2{,}561$ & $6{,}193\pm2{,}680$ \\
+         \hline
+         Time CPU (min) &  $1.3\pm1.4$ & $25\pm19$ & $ 12\pm 5$ & $16\pm7$ & $93\pm47$ \\
+         \hline
+         Best likelihood &  $-317{,}370.88$ & $-317{,}370.88$ & $\mathbf{-317{,}239.48}$ & $\mathbf{-317{,}239.48}$ & $-317{,}239.49$ \\
+         \hline
+         Mean likelihood &  $-1{,}729{,}870$ & $-320{,}947$ & $-381{,}979$ & $-320{,}503$ & $\mathbf{-319{,}451}$ \\
+         \hline
+         Standard deviation & $4{,}339{,}276$ & $5{,}029$ & $115{,}205$ & $8{,}753$ & $7{,}340$ \\
+         \hline
+    \end{tabular}%
+    }
+    \labelsyn{tab:part2:experiments:puma:puma_F_res}
+\end{table}
+
+Similarly, the developed method is compared to the BOBYQA method with restarts on domestic cabbage data (\textit{Brassica oleracea}), previously analyzed in~\cite{blischak2020inferring}.
+On these data, the BOBYQA method with multiple restarts shows better results than the developed method.
+However, it should be noted that the number of restarts required for the BOBYQA method to achieve this efficiency is unknown in general.
+The demographic inference with extended parameter bounds provides histories with higher likelihood values than before.
+
+Then, four existing likelihood computation methods implemented in \dadi, \moments, \momi, and \momentsLD, are compared using the developed method on orangutan data simulated using the \textit{stdpopsim} library~\cite{adrion2020community,lauterbur2023expanding}.
+The comparison is made using different models, including extended models from the proposed class.
+It is shown that all methods are able to recover the true demographic history when correct models are used.
+Using misspecified models, that could not capture the true history, such as models without continuous migrations, leads to differences in the obtained results (Figure~\ref{fig:part2:experiments:sim2:results:oran_momi}).
+However, it should be noted that key population characteristics, such as population size, are properly found even in such cases.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.24\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{images_experiments/suimulation_2_stdpopsim/ORAN-PULSE/oran-nomig.pdf}
+        \caption{}
+        \labelsyn{fig:part2:experiments:sim2:results:oran_momi_nomig}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.24\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{images_experiments/suimulation_2_stdpopsim/ORAN-PULSE/oran-pulse-1.pdf}
+        \caption{}
+        \labelsyn{fig:part2:experiments:sim2:results:oran_pulse_1}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.24\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{images_experiments/suimulation_2_stdpopsim/ORAN-PULSE/oran-pulse-3.pdf}
+        \caption{}
+        \labelsyn{fig:part2:experiments:sim2:results:oran_pulse_3}
+    \end{subfigure}%
+    \begin{subfigure}[b]{0.24\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{images_experiments/suimulation_2_stdpopsim/ORAN-PULSE/oran-pulse-7.pdf}
+        \caption{}
+        \labelsyn{fig:part2:experiments:sim2:results:oran_pulse_7}
+    \end{subfigure}
+    \caption{Results of tuned models for the likelihood computation method implemented in \momi (a)~model without migrations, and models with (b)~one, (c)~three, (d)~seven pulse migrations}
+    \labelsyn{fig:part2:experiments:sim2:results:oran_momi}
+\end{figure}
+
+Finally, the demographic history of three populations of modern humans in Russia is inferred: the inhabitants of Pskov, Novgorod, and Yakutia.
+The data used in this analysis has not been previously analyzed.
+The parameters of the extended model are tuned using the developed method based on the combination of genetic algorithm and local search.
+The obtained demographic history (Figure~\ref{fig:part2:experiments:rus:result}) is consistent with the known history of modern humans~\cite{schraiber2015methods, nielsen2017tracing}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\linewidth]{images_experiments/rus_genomes/picture_result.pdf}
+\caption{Obtained demographic history of three populations of modern humans}
+\labelsyn{fig:part2:experiments:rus:result}
+\end{figure}
+
+\textbf{Section 2.5} describes the results of conducted experimental studies of the developed method for parameter tuning, that is based on the combination of Bayesian optimization and local search.
+
+Bayesian optimization is compared to the genetic algorithm on a set of datasets (Figure~\ref{fig:bo_ga_comp}).
+It was shown that the genetic algorithm (GA) is more efficient in the case of one, two, and three populations.
+Bayesian optimization (BO) has faster convergence than the genetic algorithm when considering more than three populations.
+Applying Bayesian optimization allows reducing the time required for parameter tuning by 50-80\% which leads to significant acceleration of the process by days and even by weeks.
+
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.49\linewidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images_experiments/bo_ga/2_BotDivMig_8_Sim_bo_ga_time.pdf}
+\caption{}
+\labelsyn{fig:bo_ga_comp:2pops}
+\end{subfigure}%
+\begin{subfigure}[b]{0.49\linewidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images_experiments/bo_ga/5_YRI_CEU_CHB_JPT_KHV_21_Jou_bo_ga_time.pdf}
+\caption{}
+\labelsyn{fig:bo_ga_comp:5pops}
+\end{subfigure}
+\caption{Convergence over time of parameter tuning methods for (a) two populations, (b) five populations.}
+\labelsyn{fig:bo_ga_comp}
+\end{figure}
+
+Furthermore, the developed method based on the combination of Bayesian optimization and local search is used to tune the parameters of demographic models for four and five populations using real data of modern humans from~\cite{jouganous2017inferring}.
+The developed method allows obtaining parameters that yielded a higher likelihood than those found in~\cite{jouganous2017inferring} using the Powell's method with restarts.
+Figure~\ref{fig:syn_ru:bo_human} demonstrates a comparison between the resulting demographic history with a higher likelihood and the history obtained in the original study.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\linewidth]{images_experiments/bo_human/4pops_result_en.pdf}
+\caption{Comparison of the demographic history obtained using the developed method (BO) and the demographic history from~\cite{jouganous2017inferring}.}
+\labelsyn{fig:syn_ru:bo_human}
+\end{figure}
+
+The developed method of automatic model selection for demographic inference of one, two, and three populations is described in the \underline{\textbf{third chapter}}, along with the results of its application in combination with the developed method based on a genetic algorithm.
+
+A formal description of the developed method is provided in \textbf{Section 3.1}.
+The method takes the minimum and maximum constraints on the model as input.
+In the first round, the method constructs a model that satisfies the minimum constraint and performs parameter tuning using the developed genetic algorithm-based method.
+In each next round, the model is modified, the number of parameters is increased, and a new set of parameters is tuned. 
+The method stops when the model reaches the maximum constraints.
+Finally, all explored models are compared using the Akaike information criterion, and the best model is selected.
+The number of time intervals in the model is proposed as the constraint for the models.
+
+
+
+\textbf{Section 3.2} includes experimental studies of the developed automatic model selection method.
+The demographic history of the «Out of Africa» scenario for genetic data of three modern human populations is obtained, as shown in Figure~\ref{fig:part4:experiments:3pop_human:result}. The result is consistent with other studies~\cite{gutenkunst2009inferring, schraiber2015methods, nielsen2007recent}.
+It has not only a higher likelihood value than the history obtained in~\cite{gutenkunst2009inferring} using the same data, but also is better according to the Akaike information criterion.
+
+\begin{figure}[t]
+    \centering
+        \includegraphics[width=0.8\textwidth]{images_experiments/3pop_human_gutenkunst/picture_3pop_result_en.pdf}
+    \caption{Demographic history obtained by the developed method}
+    \labelsyn{fig:part4:experiments:3pop_human:result}
+\end{figure}
+
+The automatic model selection method was applied to the real data of the Gaboon forest frog (\textit{Scotobleps gabonicus}).
+Models for three different pairs of populations were constructed in Section 2.4 using manual brute force.
+The models obtained through the automatic selection method exhibited the best Akaike information criterion values among all the configurations considered for two out of three population pairs.
+In the case of the third population pair, the obtained model had a worse Akaike information criterion value compared to the best model obtained through manual brute force.
+However, the results allow identifying a redundant model parameter, and excluding this parameter from the configuration resulted in the best Akaike information criterion value.
+
+The developed method of automatic selection of extended models is used to infer the demographic history of blue shark populations.
+The genetic data was not previously analyzed.
+A sequential approach to inferring the demographic history of two and three populations is developed, resulting in the demographic history shown in Figure~\ref{fig:part2:experiments:blue_shark:3pop_hist}.
+The inferred population sizes are consistent with other studies~\cite{king2015genetic,verissimo2017world}.
+Validation of the results by colleagues in the field of zoology suggests that the split between the northern and southern populations of blue shark occurred in connection with paleoclimatic events during the Holocene epoch~\cite{leduc2010holocene,masson2013information,olsen2012variability}.
+
+\begin{figure}[b]
+    \centering
+        \includegraphics[width=0.6\linewidth]{images_experiments/blue_shark/3pop_history.pdf}
+    \caption{Demographic history of three blue shark populations}
+    \labelsyn{fig:part2:experiments:blue_shark:3pop_hist}
+\end{figure}
+
+The description of the software tools that implement the developed methods or are used in this work is provided in the \underline{\textbf{fourth chapter}}.
+
+\textbf{Section 4.1} contains a description of the GADMA (Global Search Algorithm for Demographic Model Analysis) software framework, which implements the developed class of extended models, parameter tuning methods, and automatic mdoel selection method.
+The structure of the software package is shown in Figure~\ref{fig:syn_ru:gadma_modules}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{images/part5/gadma_modules_en.pdf}
+\caption{Structure of the GADMA software framework.}
+\labelsyn{fig:syn_ru:gadma_modules}
+\end{figure}
+
+The extension of the \textit{stdpopsim} and \textit{demes} libraries is described in \textbf{Section 4.2}.
+The \textit{stdpopsim} library provides a catalog of predefined species and their demographic histories for more reliable genetic data simulations.
+This library was extended and used in the experimental studies.
+The \textit{demes} software is designed for textual and visual representation of demographic histories.
+This library is extended with the implementation of linear population size changes and is integrated into the GADMA software framework.
+All the visualizations of demographic histories in this thesis are obtained using the \textit{demes} library.
+
+To \textbf{conclude}, the results of this study are:
+
+\input{common/concl-en}
