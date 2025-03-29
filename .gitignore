@@ -16,6 +16,7 @@
 *.synctex.gz
 *.tct
 *.vrb
+*.xdv
 
 # Clean up any temp TeX stuff
 *.tmp
